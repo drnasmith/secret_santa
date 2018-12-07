@@ -5,17 +5,20 @@ Assumes that the list contains unique names
 import random
 
 # Hard code the list for now - could read from a file in future?
-names = ['Boaty McBoatface',
-         'Jingly McSparkles',
-         'Fizzy Prosecco Sipper',
-         'Punky Toe Bells',
-         'Dr Scrooge',
-         'Huski Dude',
-         'Slytherin Girl',
-         'Wreck-it Ralph',
-         'Gin-meister',
-         'Photo Boy',
-         'Short shorts']
+names = [
+    "Boaty McBoatface",
+    "Jingly McSparkles",
+    "Fizzy Prosecco Sipper",
+    "Punky Toe Bells",
+    "Dr Scrooge",
+    "Huski Dude",
+    "Slytherin Girl",
+    "Wreck-it Ralph",
+    "Gin-meister",
+    "Photo Boy",
+    "Short shorts",
+]
+
 
 def secret_santa_shuffle(names):
     """
@@ -30,23 +33,24 @@ def secret_santa_shuffle(names):
 
     # In place shuffle of the list
     random.shuffle(names)
-    
+
     # Iterate through the list
     # Each person buys for the next in list
-    # Remember list access starts at 0 for first entry 
+    # Remember list access starts at 0 for first entry
     for index, name in enumerate(names):
         # If we get to the last name in the list,
         # names[index+1] will fail with an index error
         # Catch this and set the last receiver to the first name in the list
         try:
-            recipient = names[index+1]
+            recipient = names[index + 1]
         except IndexError:
-            #print("Reached end of list, buy for first name in list")
+            # print("Reached end of list, buy for first name in list")
             recipient = names[0]
 
         results[name] = recipient
 
     return results
+
 
 def secret_santa_list(names):
     """
@@ -64,12 +68,12 @@ def secret_santa_list(names):
     recipients = list(names)
 
     for name in names:
-        #print("Determing present options for {}".format(name))
+        # print("Determing present options for {}".format(name))
 
         # Can't buy for yourself...
         options = [x for x in recipients if x != name]
 
-        #print("{} can buy for {}".format(name, ','.join(options)))
+        # print("{} can buy for {}".format(name, ','.join(options)))
 
         recipient = random.choice(options)
 
@@ -89,20 +93,23 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Secret Santa Application")
-    parser.add_argument('-m', '--method', 
-                        choices=['list', 'shuffle'], 
-                        default='list',
-                        dest="method", 
-                        help="Choose which method to use (lower case)")
+    parser.add_argument(
+        "-m",
+        "--method",
+        choices=["list", "shuffle"],
+        default="list",
+        dest="method",
+        help="Choose which method to use (lower case)",
+    )
 
     args = parser.parse_args()
 
     # Define results object we will use
     results = {}
 
-    if args.method.lower() == 'list':
+    if args.method.lower() == "list":
         results = secret_santa_list(names)
-    elif args.method.lower() == 'shuffle':
+    elif args.method.lower() == "shuffle":
         results = secret_santa_shuffle(names)
     else:
         # Should not be able to get here with argparse choices...
@@ -114,4 +121,3 @@ if __name__ == "__main__":
 
     for key in results.keys():
         print("{} is buying for {}".format(key, results[key]))
-
