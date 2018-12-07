@@ -6,4 +6,4 @@ Two options are available: list and shuffle
 Select which one by passing the -m or --method option
 Default is the list option
 
-`$ python secret_santa.py [ --method {list, shuffle} ]`
+`$ python secret_santa.py [ --method {list, shuffle, zip} ]`
