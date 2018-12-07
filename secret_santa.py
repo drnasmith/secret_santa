@@ -52,6 +52,27 @@ def secret_santa_shuffle(names):
     return results
 
 
+def secret_santa_zip(names):
+    """
+    Version using the zip method.
+    Create a recipient list by moving the last name to the first
+    of the shuffled list of names
+    Zip the two lists together and convert to a dictionary on return.
+
+    Return a dictionary with the gift giver as key, recipient as value
+    e.g. {'Alice': 'Bob', ...}
+    """
+    results = {}
+
+    # In place shuffle of the list
+    random.shuffle(names)
+    recipients = [names[-1]] + names[:-1]
+
+    results = dict(zip(names, recipients))
+
+    return results
+
+
 def secret_santa_list(names):
     """
     The method to determine who is buying for who...
@@ -96,7 +117,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-m",
         "--method",
-        choices=["list", "shuffle"],
+        choices=["list", "shuffle", "zip"],
         default="list",
         dest="method",
         help="Choose which method to use (lower case)",
@@ -111,6 +132,8 @@ if __name__ == "__main__":
         results = secret_santa_list(names)
     elif args.method.lower() == "shuffle":
         results = secret_santa_shuffle(names)
+    elif args.method.lower() == "zip":
+        results = secret_santa_zip(names)
     else:
         # Should not be able to get here with argparse choices...
         print("Error unsupported method for secret santa")
